@@ -9,7 +9,7 @@ class Gradle implements Serializable {
     Gradle(steps) {
         this.steps = steps
     }
-    
+
     def wrapper(String... args) {
         if (!SystemUtils.IS_OS_WINDOWS) {
             steps.sh "./gradlew ${args.join(' ')} -s"
