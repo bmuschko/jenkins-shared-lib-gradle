@@ -35,8 +35,7 @@ The same behavior can be achieved with the help of a https://jenkins.io/doc/book
 
 [source,groovy]
 ----
-@Library('gradle-shared-lib') _
-import com.bmuschko.jenkins.Gradle
+@Library('gradle-shared-lib') import com.bmuschko.jenkins.Gradle
 
 def gradle = new Gradle(this)
 
