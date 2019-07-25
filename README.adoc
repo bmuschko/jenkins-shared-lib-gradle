@@ -18,6 +18,24 @@ There are two ways to use the functionality in a pipeline definition as describe
 
 You can define a https://jenkins.io/doc/book/pipeline/shared-libraries/#defining-custom-steps[custom step] with the help of a global variable defined in the shared library. The following usage example demonstrates the use of such a call.
 
+_Declarative Pipeline_
+[source,groovy]
+----
+@Library('gradle-shared-lib') _
+
+pipeline {
+    agent any
+    stages {
+        stage('Gradle version with global var') {
+            steps {
+                gradlew '-v'
+            }
+        }
+    }
+}
+----
+
+_Scripted Pipeline_
 [source,groovy]
 ----
 @Library('gradle-shared-lib') _
@@ -33,6 +51,28 @@ node {
 
 The same behavior can be achieved with the help of a https://jenkins.io/doc/book/pipeline/shared-libraries/#accessing-steps[class implementation]. As you can see in the example below, you have to import the relevant class first and then call a method on it. The class implementation is more future proof as it allows for enhancing the functionality going forward.
 
+_Declarative Pipeline_
+[source,groovy]
+----
+@Library('gradle-shared-lib') import com.bmuschko.jenkins.Gradle
+
+def gradle = new Gradle(this)
+
+pipeline {
+    agent any
+    stages {
+        stage('Gradle version with class') {
+            steps {
+                script {
+                    gradle.wrapper '-v'
+                }
+            }
+        }
+    }
+}
+----
+
+_Scripted Pipeline_
 [source,groovy]
 ----
 @Library('gradle-shared-lib') import com.bmuschko.jenkins.Gradle
